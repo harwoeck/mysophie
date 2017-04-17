@@ -1,24 +1,24 @@
 <p align="center">
-  <img src="mysophie-label-small.jpg" height="130px">
+  <img src="mysophie-label-small.jpg" height="130px" alt="mysophie-label">
   <br>
   <br>
   <a href="https://travis-ci.org/harwoeck/mysophie">
-    <img src="https://travis-ci.org/harwoeck/mysophie.svg?branch=master">
+    <img src="https://travis-ci.org/harwoeck/mysophie.svg?branch=master" alt="ci-build">
   </a>
-  <img src="https://img.shields.io/badge/license-MIT%20license-blue.svg" alt="license">
+  <img src="https://img.shields.io/badge/license-MIT%20license-blue.svg" alt="license:MIT">
   <a href="https://github.com/harwoeck/mysophie/releases">
-    <img src="https://img.shields.io/badge/current%20release-in%20development-orange.svg" alt="release">
+    <img src="https://img.shields.io/badge/current%20release-in%20development-orange.svg" alt="release:in development">
   </a>
-  <img src="https://img.shields.io/badge/maintained%3F-yes-orange.svg" alt="maintenance">
+  <img src="https://img.shields.io/badge/maintained%3F-yes-orange.svg" alt="maintained:yes">
 </p>
 
 # mysophie
 **mysophie is a tool that handles static assets versioning and can be plugged into any building process. It's stateless, allows very aggressive cache settings and only runs once per production build.**
 
 ### What is the problem?
-Let's say we change our major api and then update the corresponding script file of our website. After developing, testing, pushing to dev and testing again we are happy with everything and decide to push to our production environment. Changes are pushed you test it again just for selfconfidence. Everything works great you are happy and go home.
+Let's say we change our major api and then update the corresponding script file of our website. After developing, testing, pushing to dev and testing again we are happy with everything and decide to push to our production environment. Changes are pushed and you test it again just for selfconfidence. Everything works great, you are happy and go home.
 
-The next day comes, you go to work and open your email box and end up with a lot of user reports that your site is broken. You evaluate the problem and find that some of your users had the old script version in their browser cache. Now their old code is calling a api function that doesn't exist any more.
+The next day comes, you go to work, open your email box and end up with lots of user reports that your site is broken. You evaluate the problem and find that some of your users had the old script version in their browser cache. Now their old code is calling an api function that doesn't exist any more.
 
 We would now have to explain our users how to reset their cache (and of course every browser has different instructions) and hope that everything goes well.
 
@@ -35,7 +35,7 @@ mysophie renames all your links to script or stylesheet files to a unique name a
 - most importantly: **it works**
 
 ### How it works?
-mysophie searches through html files for a specific pattern that indicates the need to handle a static asset. This pattern is a custom html data attribute `data-mysophie=""`. If mysophie finds this pattern it knows that immediately afterwards there must be ether a `href` (in `<link>` tags for stylesheets) or a `src` (in `<script>` tasg for js files).
+mysophie searches through html files for a specific pattern that indicates the need to handle a static asset. This pattern is a custom html data attribute `data-mysophie=""`. If mysophie finds this pattern it knows that immediately afterwards there must be ether a `href` (in `<link>` tags for stylesheets) or a `src` (in `<script>` tags for js files).
 
 mysophie will now search this file in it's list of assets and replace the link to an updated version with the following pattern: `<filename>-<sha-hash>.<extension>`. Original filename and extension get copied into the new link for better readability and easier debugging. The `<sha-hash>` will be replaced with the first 10 characters of the file's SHA256 hash (as hex representation). So any content change will lead to a new filename in the production build and hence force the user's browser to reload that asset.
 
@@ -50,15 +50,15 @@ mysophie is intended as one of the last tools in the building-process of a produ
 - run any preprocessor on your stylesheet files (e.g. compass for SASS) and copy them into `/prod/css/`
 - run any transpiler on your script code (e.g. typescript) and copy them into `/prod/js/`
 - run any js optimizing tools (e.g. closure-compiler) on your js files in `/prod/js/` and override them with the optimized versions
-- run mysophie with `--root /prod/`. This will scan all html files found in `/prod/` and all it's sub directories. Afterwards performs everything as explained in [How it works?](#how-it-works) and renames js and css files.
+- run mysophie with `mysophie -r /prod/ -s css/ .+\.css -s js/ .+\.js`. This will scan all html files found in `/prod/` and all it's sub directories. Afterwards performs everything as explained in [How it works?](#how-it-works) and renames js and css files.
 - push to production
 
 ### CL arguments
 Argument | Short | Description
 -------- | ----- | -----------
 `--root` | `-r` | The website's root folder<br>Example: `mysophie -r /prod/`
-`--html` | `-h` | Regular expression which is used as a search pattern for html files. Default value matches all files with `.html` extension. This argument is allowed multiple times.<br>Example: `sophie --h .+\.html --h .+\.gotmpl`
-`--static` | `-s` | Specifies one static resource directory. First argument after `--static` is the input folder relative to the root directory. Second argument is a regex expression which is used for file matching. This argument is allowed multiple times.<br>Example: `sophie -s /css/ .+\.css -s /js/ .+\.js`
+`--html` | `-h` | Regular expression which is used as a search pattern for html files in the website's root folder. Default value matches all files with `.html` extension.<br>Example: `mysophie -h .+\.gotmpl`
+`--static` | `-s` | Specifies one static resource directory. First argument option is the input folder relative to the root directory. Second option is a regex expression which is used for file matching. This argument is allowed multiple times.<br>Example: `mysophie -s css/ .+\.css -s js/ .+\.js`
 
 ### License
 MIT License
