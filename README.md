@@ -5,6 +5,9 @@
   <a href="https://travis-ci.org/harwoeck/mysophie">
     <img src="https://travis-ci.org/harwoeck/mysophie.svg?branch=master" alt="ci-build">
   </a>
+  <a href="https://codeclimate.com/github/harwoeck/mysophie">
+    <img src="https://codeclimate.com/github/harwoeck/mysophie/badges/gpa.svg">
+  </a>
   <img src="https://img.shields.io/badge/license-MIT%20license-blue.svg" alt="license:MIT">
   <a href="https://github.com/harwoeck/mysophie/releases">
     <img src="https://img.shields.io/badge/current%20release-in%20development-orange.svg" alt="release:in development">
