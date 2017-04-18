@@ -26,18 +26,31 @@ func directoryExistsAll(root string, dirs []staticDir) (invalidPath string, stat
 	return "", true
 }
 
-func readFile(p string) (string, error) {
-	content, err := ioutil.ReadFile(p)
+var permissions map[string]os.FileMode
+
+func readFile(path string) (fc string, err error) {
+	if permissions == nil {
+		permissions = make(map[string]os.FileMode)
+	}
+
+	info, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("unexpected error during file permission read: %s", err)
+		return
+	}
+	content, err := ioutil.ReadFile(path)
 	if err != nil {
 		fmt.Printf("unexcpected error during file read: %s\n", err)
 		return "", err
 	}
 
+	permissions[path] = info.Mode()
+
 	return string(content), nil
 }
 
-func writeFile(fn string, file string) error {
-	return ioutil.WriteFile(fn, []byte(file), 0777)
+func writeFile(path string, file string) error {
+	return ioutil.WriteFile(path, []byte(file), permissions[path])
 }
 
 func getFileHash(p string) (string, error) {
