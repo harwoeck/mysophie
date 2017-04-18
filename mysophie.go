@@ -28,17 +28,19 @@ func analyzeFile(fn string, file string, staticFiles *struct {
 
 		// find next occerence of pattern 'data-mysophie="" '
 		for i := 0; i < mustSkip; i++ {
-			startIndex = strings.Index(fc, pattern)
-			if startIndex == -1 {
+			tempIndex := strings.Index(fc, pattern)
+			if tempIndex == -1 {
 				if shouldDebug(debugNormal) {
 					fmt.Println("no more search patterns found - aborting")
 				}
+				startIndex = tempIndex
 				break
 			}
-			fc = fc[startIndex+len(pattern):]
+			fc = fc[tempIndex+len(pattern):]
+			startIndex += tempIndex
 
 			if shouldDebug(debugDetailed) {
-				fmt.Printf("[%s] Round(%d): startIndex=%d | fc='%s'\n", fn, i, startIndex, fc)
+				fmt.Printf("[%s] Round(%d): tempIndex=%d | startIndex=%d | fc='%s'\n", fn, i, tempIndex, startIndex, fc)
 			}
 		}
 		if startIndex == -1 {
