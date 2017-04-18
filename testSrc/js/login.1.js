@@ -1,2 +1,2 @@
-var answer = "It's alright";
-var answer = "He is called 'Johnny'";
+var answer4 = "It's alright";
+var answer5 = "He is called 'Johnny'";

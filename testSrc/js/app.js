@@ -1,3 +1,3 @@
-var answer = "It's alright";
-var answer = "He is called 'Johnny'";
-var answer = 'He is called "Johnny"';
+var answer1 = "It's alright";
+var answer2 = "He is called 'Johnny'";
+var answer3 = 'He is called "Johnny"';
