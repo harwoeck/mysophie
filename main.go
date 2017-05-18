@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	debugLev = 3
+	debugLev = debugNo
 
 	root, htmlRegex, sIn, err := organizeCLArguments(os.Args...)
 	if err != nil {
