@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"sync"
@@ -50,6 +51,9 @@ func main() {
 		go func(fn string, file string) {
 			defer wg.Done()
 
+			fn = root + strings.TrimPrefix(fn, "/")
+			fmt.Printf("-> %s\n", fn)
+
 			ferr := analyzeFile(fn, file, &concurrentStaticFileMap)
 			if ferr != nil {
 				fmt.Println(ferr)
@@ -59,7 +63,10 @@ func main() {
 	}
 
 	for fn, newFn := range staticFiles {
-		os.Rename(root+strings.TrimPrefix(fn, "/"), root+strings.TrimPrefix(newFn, "/"))
+		err = os.Rename(root+strings.TrimPrefix(fn, "/"), root+strings.TrimPrefix(newFn, "/"))
+		if err != nil {
+			log.Println(err.Error())
+		}
 	}
 
 	wg.Wait()
