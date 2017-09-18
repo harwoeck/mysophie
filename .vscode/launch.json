@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug mysophie",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceRoot}",
+            "env": {
+                "GOPATH": "/home/harwoeck/go"
+            },
+            "args": [
+                "-r",
+                "/home/harwoeck/repos/lackinger.cc/dist/",
+                "-s",
+                "css/",
+                ".+\\.css",
+                 "-s",
+                "js/",
+                ".\\.js"
+            ],
+            "showLog": true
+        }
+    ]
+}
